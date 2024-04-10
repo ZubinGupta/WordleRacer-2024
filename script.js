@@ -87,7 +87,7 @@ function registerKeyboardEvents() {
           state.currentRow++;
           state.currentCol = 0;
         } else {
-          alert('Not a valid word.');
+          document.getElementById("hello").innerText = "That is not a valid word.";
         }
       }
     }
@@ -166,9 +166,9 @@ function revealWord(guess) {
   const isGameOver = state.currentRow === 5;
 
     if (isWinner) {
-     document.getElementById("hello").innerText = "you won!";
+     document.getElementById("hello").innerText = "You won!";
     } else if (isGameOver) {
-      document.getElementById("hello").innerText = "the word was " + state.secret;
+      document.getElementById("hello").innerText = "The word was " + state.secret;
     }
 
 }
