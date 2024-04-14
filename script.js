@@ -1,4 +1,5 @@
 // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+
 // import {
 //   getDatabase,
 //   ref,
@@ -33,16 +34,18 @@ import { guessDictionary, realDictionary } from './dictionary.js';
 
 
 // for testing purposes, make sure to use the test dictionary
-const guessDict = guessDictionary;
+const guess = guessDictionary;
 const dictionary = realDictionary;
+var done = false;
 const state = {
-    secret: dictionary[Math.floor(Math.random() * dictionary.length)];
-    grid: Array(6)
-      .fill()
-      .map(() => Array(5).fill('')),
-    currentRow: 0,
-    currentCol: 0,
-  };
+  secret: dictionary[Math.floor(Math.random() * dictionary.length)],
+  grid: Array(6)
+    .fill()
+    .map(() => Array(5).fill('')),
+  currentRow: 0,
+  currentCol: 0,
+};
+
 function drawGrid(container) {
   const grid = document.createElement('div');
   grid.className = 'grid';
@@ -79,14 +82,17 @@ function registerKeyboardEvents() {
   document.body.onkeydown = (e) => {
     const key = e.key;
     if (key === 'Enter') {
-      if (state.currentCol === 5) {
-        const word = getCurrentWord();
-        if (isWordValid(word)) {
-          revealWord(word);
-          state.currentRow++;
-          state.currentCol = 0;
-        } else {
-          document.getElementById("hello").innerText = "That is not a valid word.";
+      if(done) reset();
+      else{
+        if (state.currentCol === 5) {
+          const word = getCurrentWord();
+          if (isWordValid(word)) {
+            revealWord(word);
+            state.currentRow++;
+            state.currentCol = 0;
+          } else {
+            alert('Not a valid word.');
+          }
         }
       }
     }
@@ -95,6 +101,9 @@ function registerKeyboardEvents() {
     }
     if (isLetter(key)) {
       addLetter(key);
+    }
+    if (key === 'Shift') {
+      reset();
     }
     updateGrid();
   };
@@ -105,7 +114,7 @@ function getCurrentWord() {
 }
 
 function isWordValid(word) {
-  return dictionary.includes(word) || guessDict.includes(word);
+  return dictionary.includes(word) || guess.includes(word);
 }
 
 function getNumOfOccurrencesInWord(word, letter) {
@@ -164,9 +173,11 @@ function revealWord(guess) {
   const isGameOver = state.currentRow === 5;
 
     if (isWinner) {
-     document.getElementById("hello").innerText = "You won!";
+     document.getElementById("hello").innerText = "you won!";
+      done = true;
     } else if (isGameOver) {
-      document.getElementById("hello").innerText = "The word was " + state.secret;
+      document.getElementById("hello").innerText = "the word was " + state.secret;
+      done = true;
     }
 
 }
@@ -194,9 +205,26 @@ function startup() {
   registerKeyboardEvents();
   // state.secret = "hello";
   
-  
   updateGrid();
-   
+ 
+}
+
+function reset(){
+  done = false;
+  state.secret = dictionary[Math.floor(Math.random() * dictionary.length)];
+  state.grid = Array(6)
+    .fill()
+    .map(() => Array(5).fill(''));
+  state.currentRow = 0;
+  state.currentCol = 0;
+  for(let i = 0; i<6; i++){
+    for(let j = 0; j<5; j++){
+      const box = document.getElementById(`box${i}${j}`);
+      box.classList.remove("right");
+      box.classList.remove("wrong");
+      box.classList.remove("empty");
+    }
+  }
 }
 
 startup();
