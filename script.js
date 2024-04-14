@@ -35,14 +35,7 @@ import { guessDictionary, realDictionary } from './dictionary.js';
 // for testing purposes, make sure to use the test dictionary
 const guessDict = guessDictionary;
 const dictionary = realDictionary;
-const state = {
-  secret: dictionary[Math.floor(Math.random() * dictionary.length)],
-  grid: Array(6)
-    .fill()
-    .map(() => Array(5).fill('')),
-  currentRow: 0,
-  currentCol: 0,
-};
+var state;
 
 function drawGrid(container) {
   const grid = document.createElement('div');
@@ -97,7 +90,9 @@ function registerKeyboardEvents() {
     if (isLetter(key)) {
       addLetter(key);
     }
-
+    if(key === 'Shift'){
+      startup();
+    }
     updateGrid();
   };
 }
@@ -196,8 +191,16 @@ function startup() {
   registerKeyboardEvents();
   // state.secret = "hello";
   
+  state = {
+    secret: state.secret = dictionary[Math.floor(Math.random() * dictionary.length)];
+    grid: Array(6)
+      .fill()
+      .map(() => Array(5).fill('')),
+    currentRow: 0,
+    currentCol: 0,
+  }
   updateGrid();
- 
+   
 }
 
 startup();
