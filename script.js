@@ -91,12 +91,16 @@ function registerKeyboardEvents() {
             state.currentRow++;
             state.currentCol = 0;
           } else {
-            alert('Not a valid word.');
+            //not a word, do nothing
           }
         }
       }
     }
     if (key === 'Backspace') {
+      if(e.ctrlKey){
+        clearLine();
+      }
+      else
       removeLetter();
     }
     if (isLetter(key)) {
@@ -107,6 +111,13 @@ function registerKeyboardEvents() {
     }
     updateGrid();
   };
+}
+
+function clearLine(){
+  for(var i = 0; i<=state.currentCol; i++){
+    state.grid[state.currentRow][i] = "";
+  }
+  state.currentCol = 0;
 }
 
 function getCurrentWord() {
