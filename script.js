@@ -96,9 +96,6 @@ function registerKeyboardEvents() {
     if (isLetter(key)) {
       addLetter(key);
     }
-    if(key === 'Shift'){
-      startup();
-    }
     updateGrid();
   };
 }
