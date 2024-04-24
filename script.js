@@ -37,7 +37,7 @@ import { guessDictionary, realDictionary } from './dictionary.js';
 const guess = guessDictionary;
 const dictionary = realDictionary;
 var done = false;
-const state = {
+var state = {
   secret: dictionary[Math.floor(Math.random() * dictionary.length)],
   grid: Array(6)
     .fill()
@@ -45,7 +45,8 @@ const state = {
   currentRow: 0,
   currentCol: 0,
 };
-
+var srow = 0;
+var scol = 0;
 function drawGrid(container) {
   const grid = document.createElement('div');
   grid.className = 'grid';
@@ -66,6 +67,8 @@ function updateGrid() {
       box.textContent = state.grid[i][j];
     }
   }
+  selectSpot();
+  
 }
 
 function drawBox(container, row, col, letter = '') {
@@ -100,8 +103,9 @@ function registerKeyboardEvents() {
       if(e.ctrlKey){
         clearLine();
       }
-      else
-      removeLetter();
+      else{
+        removeLetter();
+      }
     }
     if (isLetter(key)) {
       addLetter(key);
@@ -110,11 +114,21 @@ function registerKeyboardEvents() {
       reset();
     }
     updateGrid();
+    // document.getElementById("hello").innerHTML = `${state.currentRow},${state.currentCol},${srow},${scol}`;
   };
 }
 
+function selectSpot(){
+  document.getElementById(`box${srow}${scol}`).classList.remove("select");
+  srow = state.currentRow;
+  if(state.currentCol != 5){
+    scol = state.currentCol;
+    document.getElementById(`box${srow}${scol}`).classList.add("select");
+  }
+}
+
 function clearLine(){
-  for(var i = 0; i<=state.currentCol; i++){
+  for(var i = 0; i<5; i++){
     state.grid[state.currentRow][i] = "";
   }
   state.currentCol = 0;
@@ -210,6 +224,7 @@ function removeLetter() {
 }
 
 function startup() {
+  document.getElementById("hello").innerText = "Welcome to WordleRacer (WIP)!";
   const game = document.getElementById('game');
   drawGrid(game);
 
@@ -221,6 +236,7 @@ function startup() {
 }
 
 function reset(){
+  document.getElementById("hello").innerText = "Welcome to WordleRacer (WIP)!";
   done = false;
   state.secret = dictionary[Math.floor(Math.random() * dictionary.length)];
   state.grid = Array(6)
