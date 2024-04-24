@@ -6,6 +6,7 @@ body {
   --empty: #3a3a3c;
   --wrong: #b59f3b;
   --right: #538d4e;
+  --select: #08b0d1;
 }
 .grid {
   display: grid;
@@ -36,6 +37,10 @@ body {
 
 .box.right {
   background: var(--right);
+}
+
+.box.select {
+  background: var(--select);
 }
 
 
