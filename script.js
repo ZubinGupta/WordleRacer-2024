@@ -6,7 +6,7 @@
 //   push,
 //   onValue,
 // } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-import { guessDictionary, realDictionary } from './dictionary.js';
+import { guessDictionary, realDictionary , diffDict } from './dictionary.js';
 
 
 // const appSettings = {
@@ -36,9 +36,10 @@ import { guessDictionary, realDictionary } from './dictionary.js';
 // for testing purposes, make sure to use the test dictionary
 const guess = guessDictionary;
 const dictionary = realDictionary;
+const diff = diffDict;
 var done = false;
 var state = {
-  secret: dictionary[Math.floor(Math.random() * dictionary.length)],
+  secret: diff[Math.floor(Math.random() * diff.length)],
   grid: Array(6)
     .fill()
     .map(() => Array(5).fill('')),
@@ -139,7 +140,7 @@ function getCurrentWord() {
 }
 
 function isWordValid(word) {
-  return dictionary.includes(word) || guess.includes(word);
+  return dictionary.includes(word) || guess.includes(word) || diff.includes(word);
 }
 
 function getNumOfOccurrencesInWord(word, letter) {
@@ -233,17 +234,22 @@ function startup() {
   
   updateGrid();
  
+  reset()
 }
 
 function reset(){
-  document.getElementById("hello").innerText = "Welcome to WordleRacer (WIP)!";
+  
   done = false;
-  state.secret = dictionary[Math.floor(Math.random() * dictionary.length)];
+  var num = Math.floor(Math.random() * diff.length);
+  state.secret = diff[num];
   state.grid = Array(6)
     .fill()
     .map(() => Array(5).fill(''));
   state.currentRow = 0;
   state.currentCol = 0;
+  document.getElementById("hello").innerText = "Welcome to WordleRacer (WIP)!";
+  document.getElementById("diff").innerText = "Difficulty: " +( Math.floor(num/303) + 1) + "/19";
+
   for(let i = 0; i<6; i++){
     for(let j = 0; j<5; j++){
       const box = document.getElementById(`box${i}${j}`);
