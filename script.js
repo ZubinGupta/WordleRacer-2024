@@ -238,9 +238,10 @@ function startup() {
 }
 
 function reset(){
-  
+  var max = toInput.value;
+  var min = fromInput.value;
   done = false;
-  var num = Math.floor(Math.random() * diff.length);
+  var num = Math.floor(Math.random() * 303 * (max-min+1)) + min*303-303;
   state.secret = diff[num];
   state.grid = Array(6)
     .fill()
@@ -248,7 +249,7 @@ function reset(){
   state.currentRow = 0;
   state.currentCol = 0;
   document.getElementById("hello").innerText = "Welcome to WordleRacer (WIP)!";
-  document.getElementById("diff").innerText = "Difficulty: " +( Math.floor(num/303) + 1) + "/19";
+  document.getElementById("diff").innerText = "Difficulty: " +( Math.floor(num/303) + 1) + "/19 ";
 
   for(let i = 0; i<6; i++){
     for(let j = 0; j<5; j++){
@@ -329,7 +330,7 @@ function fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
 
 function setToggleAccessible(currentTarget) {
 const toSlider = document.querySelector('#toSlider');
-if (Number(currentTarget.value) <= 0 ) {
+if (Number(currentTarget.value) <= 0 || toInput.value == 1) {
   toSlider.style.zIndex = 2;
 } else {
   toSlider.style.zIndex = 0;
