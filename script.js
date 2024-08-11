@@ -21,8 +21,8 @@ import { guessDictionary, realDictionary , diffDict } from './dictionary.js';
 // const database = getDatabase(app);
 
 
-const reference = ref(database, "foo");
-push(reference, "bar");
+// const reference = ref(database, "foo");
+// push(reference, "bar");
 
 onValue(reference, function(snapshot){
       console.log(Object.values(snapshot.val()));
