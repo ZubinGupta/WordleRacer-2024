@@ -1,32 +1,31 @@
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 
-// import {
-//   getDatabase,
-//   ref,
-//   push,
-//   onValue,
-// } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 import { guessDictionary, realDictionary , diffDict } from './dictionary.js';
 
 
-// const appSettings = {
-//   databaseURL: "https://wordleracer-default-rtdb.firebaseio.com/",
-// };
+const appSettings = {
+  databaseURL: "https://wordleracer-default-rtdb.firebaseio.com/",
+};
 
 
 
 
 
-// const app = initializeApp(appSettings);
-// const database = getDatabase(app);
+const app = initializeApp(appSettings);
+const database = getDatabase(app);
 
 
-// const reference = ref(database, "foo");
-// push(reference, "bar");
+var reference = ref(database, "default");
 
-// onValue(reference, function(snapshot){
-//       console.log(Object.values(snapshot.val()));
-// })
+onValue(reference, function(snapshot){
+      console.log(Object.values(snapshot.val()));
+})
 
 // document.getElementById("hello").innerText = "e";
 // console.log("app");
@@ -40,7 +39,7 @@ const diff = diffDict;
 var done = false;
 var state = {
   secret: diff[Math.floor(Math.random() * diff.length)],
-  grid: Array(6)
+  grid: Array(6 )
     .fill()
     .map(() => Array(5).fill('')),
   currentRow: 0,
@@ -48,6 +47,36 @@ var state = {
 };
 var srow = 0;
 var scol = 0;
+var username = '';
+var roomCode = '';
+
+window.storeRoomCode = function() {
+  const roomCodeInput = document.getElementById('room');
+  if (username.trim() !== '' && roomCodeInput.value.trim() !== '' && roomCodeInput.value.length === 4) {
+    roomCode = roomCodeInput.value;
+    console.log('Room code stored:', roomCode);
+    roomCodeInput.value = `Room Code: ${roomCode}`;
+    roomCodeInput.disabled = true;
+    document.getElementById('roomcodebutton').style.display = 'none';
+    reference = ref(database, roomCode);
+    push(reference, username);
+  } else {
+    console.log('Username and room code cannot be empty');
+  }
+}
+
+window.storeUsername = function() {
+  const usernameInput = document.getElementById('username');
+  if (usernameInput.value.trim() !== '') {
+    username = usernameInput.value;
+    console.log('Username stored:', username);
+    usernameInput.value = `Username: ${username}`;
+    usernameInput.disabled = true;
+    document.getElementById('usernamebutton').style.display = 'none';
+  } else {
+    console.log('Username cannot be empty');
+  }
+}
 function drawGrid(container) {
   const grid = document.createElement('div');
   grid.className = 'grid';
@@ -84,6 +113,9 @@ function drawBox(container, row, col, letter = '') {
 
 function registerKeyboardEvents() {
   document.body.onkeydown = (e) => {
+    if (document.activeElement.tagName === 'INPUT') {
+      return; // Do nothing if an input field is focused
+    }
     const key = e.key;
     if (key === 'Enter') {
       if(done) reset();
@@ -241,6 +273,7 @@ function reset(){
   var max = toInput.value;
   var min = fromInput.value;
   done = false;
+
   var num = Math.floor(Math.random() * 303 * (max-min+1)) + min*303-303;
   state.secret = diff[num];
   state.grid = Array(6)
