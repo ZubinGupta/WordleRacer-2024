@@ -13,22 +13,16 @@ const appSettings = {
   databaseURL: "https://wordleracer-default-rtdb.firebaseio.com/",
 };
 
-
-
-
-
+console.log('Initializing Firebase app'); // Debugging statement
 const app = initializeApp(appSettings);
+console.log('Firebase app initialized'); // Debugging statement
+
 const database = getDatabase(app);
+console.log('Database initialized'); // Debugging statement
 
 
-var reference = ref(database, "default");
 
-onValue(reference, function(snapshot){
-      console.log(Object.values(snapshot.val()));
-})
 
-// document.getElementById("hello").innerText = "e";
-// console.log("app");
 
 
 
@@ -39,7 +33,7 @@ const diff = diffDict;
 var done = false;
 var state = {
   secret: diff[Math.floor(Math.random() * diff.length)],
-  grid: Array(6 )
+  grid: Array(6)
     .fill()
     .map(() => Array(5).fill('')),
   currentRow: 0,
@@ -48,7 +42,7 @@ var state = {
 var srow = 0;
 var scol = 0;
 var username = '';
-var roomCode = '';
+var roomCode = 'default';
 
 window.storeRoomCode = function() {
   const roomCodeInput = document.getElementById('room');
@@ -58,8 +52,20 @@ window.storeRoomCode = function() {
     roomCodeInput.value = `Room Code: ${roomCode}`;
     roomCodeInput.disabled = true;
     document.getElementById('roomcodebutton').style.display = 'none';
-    reference = ref(database, roomCode);
+    const reference = ref(database, roomCode);
     push(reference, username);
+    console.log(reference);
+    onValue(reference, function(snapshot) {
+      console.log('onValue triggered'); // Debugging statement
+      if (snapshot.exists()) {
+        const pList = Object.values(snapshot.val());
+        console.log('pList updated:', pList);
+      } else {
+        console.log('No data available');
+      }
+    }, function(error) {
+      console.error('Error reading data:', error);
+    });
   } else {
     console.log('Username and room code cannot be empty');
   }
