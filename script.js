@@ -5,6 +5,7 @@ import {
   ref,
   push,
   onValue,
+  remove,
 } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 import { guessDictionary, realDictionary, diffDict } from './dictionary.js';
 
@@ -375,6 +376,7 @@ function reset() {
       var min = fromInput.value;
       var num = Math.floor(Math.random() * 303 * (max - min + 1)) + min * 303 - 303;
       state.secret = diff[num];
+      setTimeout(() => {(remove(ref(database, roomCode)))}, 1000);
     }
   } else {
     var max = toInput.value;
