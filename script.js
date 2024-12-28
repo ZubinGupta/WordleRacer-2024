@@ -31,6 +31,7 @@ const guess = guessDictionary;
 const dictionary = realDictionary;
 const diff = diffDict;
 var done = false;
+let gamesList = [];
 var state = {
   secret: diff[Math.floor(Math.random() * diff.length)],
   grid: Array(6)
@@ -43,27 +44,30 @@ var srow = 0;
 var scol = 0;
 var username = '';
 var roomCode = 'default';
+var mult = -1;
 
 window.storeRoomCode = function () {
   const roomCodeInput = document.getElementById('room');
-  if (username.trim() !== '' && roomCodeInput.value.trim() !== '' && roomCodeInput.value.length === 4) {
+  if (username.trim() !== '' && roomCodeInput.value.trim() !== '' && roomCodeInput.value != "default") {
     roomCode = roomCodeInput.value;
     console.log('Room code stored:', roomCode);
     roomCodeInput.value = `Room Code: ${roomCode}`;
     roomCodeInput.disabled = true;
     document.getElementById('roomcodebutton').style.display = 'none';
     const reference = ref(database, `${roomCode}/players`);
+    const refKey = reference.key;
     var position = 0;
     // Check if username already exists and replace if necessary
     onValue(reference, function (snapshot) {
       let newUsername = username;
       if (snapshot.exists()) {
         const pList = Object.values(snapshot.val());
+        position = pList.length;
         let count = 1;
         while (pList.includes(newUsername)) {
           count++;
           newUsername = `${username} ${count}`;
-          position = pList.length;
+          
         }
         if (roomCode != 'default') {
           document.getElementById('pListDisplay').innerText = pList.join('\n');
@@ -99,6 +103,33 @@ window.storeRoomCode = function () {
         document.getElementById('pListDisplay').value = '';
       }
     });
+    const gamesRef = ref(database, `${roomCode}/games`);
+    onValue(gamesRef, function (snapshot) {
+      console.log('onValue triggered'); // Debugging statement
+      if (snapshot.exists()) {
+        gamesList = Object.values(snapshot.val());
+        console.log('gamesList updated:');
+        mult = 0;
+        reset();
+        document.getElementById("hello").innerText = "Game started! GO GO GO!";
+      } else {
+        console.log('No data available');
+
+      }
+    });
+    const winnerRef = ref(database, `${roomCode}/winner`);
+    onValue(winnerRef, function (snapshot) {
+      console.log('onValue triggered'); // Debugging statement
+      if (snapshot.exists()) {
+        const winnerList = Object.values(snapshot.val());
+        console.log('winnerList updated:', winnerList);
+        document.getElementById("hello").innerText = "The winner is: " + winnerList;
+        mult = -1;
+        reset();
+      } else {
+        console.log('No data available');
+      }
+    });
   } else {
     console.log('Username and room code cannot be empty');
   }
@@ -108,18 +139,18 @@ function startGame() {
   console.log('Start button clicked');
   // Generate 3 random words
   document.getElementById('startButton').style.display = 'none';
-  const words = [];
+  const gamesRef = ref(database, `${roomCode}/games`);
   for (let i = 0; i < 3; i++) {
     const max = toInput.value;
     const min = fromInput.value;
     const num = Math.floor(Math.random() * 303 * (max - min + 1)) + min * 303 - 303;
-    words.push(diff[num]);
+    push(gamesRef, diff[num] + ' ' + (Math.floor(num / 303) + 1));
   }
   console.log('Generated words');
 
   // Push the generated words to roomCode/games
-  const gamesRef = ref(database, `${roomCode}/games`);
-  push(gamesRef, words);
+
+
 
   // Add your game start logic here
 }
@@ -202,9 +233,9 @@ function registerKeyboardEvents() {
     if (isLetter(key)) {
       addLetter(key);
     }
-    if (key === 'Shift') {
-      reset();
-    }
+    // if (key === 'Shift') { make this work someday
+    //   reset();
+    // }
     updateGrid();
     // document.getElementById("hello").innerHTML = `${state.currentRow},${state.currentCol},${srow},${scol}`;
   };
@@ -289,11 +320,15 @@ function revealWord(guess) {
   const isGameOver = state.currentRow === 5;
 
   if (isWinner) {
-    document.getElementById("hello").innerText = "you won!";
+    if (mult < 0){
+      document.getElementById("hello").innerText = "you won!";
+    }
     done = true;
   } else if (isGameOver) {
-    document.getElementById("hello").innerText = "the word was " + state.secret;
-    done = true;
+    if (mult < 0){
+      document.getElementById("hello").innerText = "the word was " + state.secret;
+    }
+      done = true;
   }
 
 }
@@ -328,20 +363,37 @@ function startup() {
 }
 
 function reset() {
-  var max = toInput.value;
-  var min = fromInput.value;
-  done = false;
+  if (mult >= 0) {
+    mult++;
+    if (mult < gamesList.length + 1) {
+      state.secret = gamesList[mult - 1].substring(0, 5);
+    } else {
+      const winref = ref(database,`${roomCode}/winner`);
+      push(winref, username);
+      mult = -1;
+      var max = toInput.value;
+      var min = fromInput.value;
+      var num = Math.floor(Math.random() * 303 * (max - min + 1)) + min * 303 - 303;
+      state.secret = diff[num];
+    }
+  } else {
+    var max = toInput.value;
+    var min = fromInput.value;
+    var num = Math.floor(Math.random() * 303 * (max - min + 1)) + min * 303 - 303;
+    state.secret = diff[num];
+  }
 
-  var num = Math.floor(Math.random() * 303 * (max - min + 1)) + min * 303 - 303;
-  state.secret = diff[num];
+  done = false;
   state.grid = Array(6)
     .fill()
     .map(() => Array(5).fill(''));
   state.currentRow = 0;
   state.currentCol = 0;
-  document.getElementById("hello").innerText = "Welcome to WordleRacer (WIP)!";
-  document.getElementById("diff").innerText = "Difficulty: " + (Math.floor(num / 303) + 1) + "/19 ";
-
+  if (mult < 0) {
+    document.getElementById("diff").innerText = "Difficulty: " + (Math.floor(num / 303) + 1) + "/19 ";
+  } else {
+    document.getElementById("diff").innerText = "Difficulty: " + (gamesList[mult - 1]).substring(6, gamesList[mult - 1].length) + "/19 ";
+  }
   for (let i = 0; i < 6; i++) {
     for (let j = 0; j < 5; j++) {
       const box = document.getElementById(`box${i}${j}`);
@@ -350,6 +402,7 @@ function reset() {
       box.classList.remove("empty");
     }
   }
+
 }
 
 function controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
