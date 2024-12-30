@@ -6,6 +6,7 @@ import {
   push,
   onValue,
   remove,
+  set,
 } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 import { guessDictionary, realDictionary, diffDict } from './dictionary.js';
 
@@ -22,9 +23,9 @@ const database = getDatabase(app);
 console.log('Database initialized'); // Debugging statement
 
 
+var pKey;
 
-
-
+var isDQ = false;
 
 
 // for testing purposes, make sure to use the test dictionary
@@ -56,7 +57,6 @@ window.storeRoomCode = function () {
     roomCodeInput.disabled = true;
     document.getElementById('roomcodebutton').style.display = 'none';
     const reference = ref(database, `${roomCode}/players`);
-    const refKey = reference.key;
     var position = 0;
     // Check if username already exists and replace if necessary
     onValue(reference, function (snapshot) {
@@ -74,7 +74,9 @@ window.storeRoomCode = function () {
           document.getElementById('pListDisplay').innerText = pList.join('\n');
         }
       }
-      push(reference, newUsername);
+      const newUserRef = push(reference, newUsername);
+      pKey = newUserRef.key; // Capture the unique key for the pushed user data
+      console.log('pkey is ' + pKey);
       document.getElementById('username').value = `Username: ${newUsername}`;
       console.log('Username pushed:', newUsername);
       username = newUsername;
@@ -328,6 +330,10 @@ function revealWord(guess) {
   } else if (isGameOver) {
     if (mult < 0){
       document.getElementById("hello").innerText = "the word was " + state.secret;
+    }else{
+      isDQ = true;
+      set(ref(database, `${roomCode}/players/${pKey}`), `${username} lost`);
+      mult = -1;
     }
       done = true;
   }
@@ -365,8 +371,9 @@ function startup() {
 
 function reset() {
   if (mult >= 0) {
-    mult++;
+    if(!isDQ) mult++;
     if (mult < gamesList.length + 1) {
+      set(ref(database, `${roomCode}/players/${pKey}`), `${username} ${mult}/3`);
       state.secret = gamesList[mult - 1].substring(0, 5);
     } else {
       const winref = ref(database,`${roomCode}/winner`);
