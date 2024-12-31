@@ -47,6 +47,7 @@ var scol = 0;
 var username = '';
 var roomCode = 'default';
 var mult = -1;
+var position;
 
 window.storeRoomCode = function () {
   const roomCodeInput = document.getElementById('room');
@@ -57,7 +58,7 @@ window.storeRoomCode = function () {
     roomCodeInput.disabled = true;
     document.getElementById('roomcodebutton').style.display = 'none';
     const reference = ref(database, `${roomCode}/players`);
-    var position = 0;
+    position = 0;
     // Check if username already exists and replace if necessary
     onValue(reference, function (snapshot) {
       let newUsername = username;
@@ -137,6 +138,18 @@ window.storeRoomCode = function () {
     console.log('Username and room code cannot be empty');
   }
 }
+
+window.addEventListener('beforeunload', function (event) {
+  if(roomCode != 'default'){
+    if(position === 0){
+      console.log("host left");
+      remove(ref(database, roomCode));
+    }else{
+      console.log("bye bye not host");
+      remove(ref(database, `${roomCode}/players/${pKey}`));
+    }
+  }
+});
 
 function startGame() {
   console.log('Start button clicked');
