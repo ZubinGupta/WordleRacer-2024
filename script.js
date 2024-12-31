@@ -7,6 +7,7 @@ import {
   onValue,
   remove,
   set,
+  onChildRemoved,
 } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
 import { guessDictionary, realDictionary, diffDict } from './dictionary.js';
 
@@ -134,6 +135,16 @@ window.storeRoomCode = function () {
         console.log('No data available');
       }
     });
+
+    const roomRef = ref(database, roomCode);
+    onChildRemoved(roomRef, function (snapshot) {
+      document.getElementById("pListDisplay").innerText = "";
+      console.log('Room deleted, host has left');
+      mult = -1;
+      reset();
+      
+    });
+
   } else {
     console.log('Username and room code cannot be empty');
   }
