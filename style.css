@@ -134,3 +134,23 @@ input[type="range"] {
   height: 0;
   z-index: 1;
 }
+
+#difficultyContainer button {
+  width: 100px;
+  height: 50px;
+  font-size: 1.2rem;
+  background-color: gray;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+#difficultyContainer button:hover {
+  background-color: yellow;
+  color: black;
+}
+
+#difficultyContainer button.active {
+  background-color: green;
+  color: white;
+}
