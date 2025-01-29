@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,35 +21,54 @@
       
     
    
-      
+      <h1> WordleRacer</h1>
+      <h3> by Zubin Gupta</h3>
     
-    
-    <div id="game">
-      
+    <div id="game-container">
+      <div id="left-box" class="text-box">
+        <p>Single-player mode? Go right ahead!</p>
+        <p>Or</p>
+        <p>Multi-player mode? Enter details below:</p>  
+        <input id="username" placeholder="Enter Username"></input> <button id="usernamebutton" onclick="storeUsername()">Enter</button><br>
+        
+        <input id="room" placeholder="Enter Room Code"></input> <button id="roomcodebutton" onclick="storeRoomCode()">Enter</button> 
+        <br><hr><br>
+        <p>What’s New?</p>
+        <ol></ol>
+        <p>Multi-player mode: Race your friends!</p>
+        <p>Select your difficulty level!</p>
+        <p>Use CTRL+Backspace to delete entire word!</p>
+        <p>Faster response time!</p>
+
+
+      </div>
+      <div id="game"></div>
+      <div id="right-box" class="text-box">
+        <p>The rules for playing Wordle are as follows: </p>
+        <p>The goal is to guess a 5-letter word in 6 attempts or less.</p>
+        <p>After each guess, the letters will be colored to give you feedback:   </p>       
+        <p>• Green: The letter is in the correct position in the answer.</p>
+        <p>• Yellow: The letter is in the answer, but not in the correct position.</p>
+        <p>• Gray: The letter is not in the answer at all.</p>
+        <p>Use the colored feedback to inform your next guess.</p>
+        <p>The game ends when you correctly guess the 5-letter word or use up all 6 attempts.</p>
+        <p>That's it! Simple, yet challenging and fun.</p>
+        </div>
     </div>
   
     
-    <p id="hello">Welcome to Wordleracer! (WIP)</p>
+    <p id="hello" class="white">Have fun!</p>
     
-    <p id="diff"></p>
-    <input id="username" placeholder="Enter Username"></input> <button id="usernamebutton" onclick="storeUsername()">Enter</button><br>
-    <input id="room" placeholder="Enter Room Code (4 chars)"></input> <button id="roomcodebutton" onclick="storeRoomCode()">Enter</button>
+    <p id="diff" class="white">hello</p>
+    
     <p id ="pListDisplay"></p>
-    <div class="range_container">
-      <div class="sliders_control">
-          <input id="fromSlider" type="range" value="1" min="1" max="19"/>
-          <input id="toSlider" type="range" value="10" min="1" max="19"/>
-      </div>
-      <div class="form_control">
-          <div class="form_control_container">
-              <div class="form_control_container__time">Min</div>
-              <input class="form_control_container__time__input" type="number" id="fromInput" value="1" min="0" max="100"/>
-          </div>
-          <div class="form_control_container">
-              <div class="form_control_container__time">Max</div>
-              <input class="form_control_container__time__input" type="number" id="toInput" value="10" min="0" max="100"/>
-          </div>
-      </div>
+    <div id="difficultyContainer" style="margin-top: 20px;">
+      <button onclick="setDifficultyRange(1, 5)">Easy</button>
+      <button onclick="setDifficultyRange(6, 10)">Medium</button>
+      <button onclick="setDifficultyRange(11, 15)">Hard</button>
+      <button onclick="setDifficultyRange(16, 19)">Expert</button>
+    </div>
+   
   </div>
   </body>
 </html>

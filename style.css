@@ -49,12 +49,27 @@ body {
   display: flex;
   justify-content: center;
   align-items: start;
-  margin-top: 5rem;
+  margin-top: 3rem;
   width: 100%;
   
 }
 
-p{
+#game-container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.text-box {
+  width: 350px;
+  height: 420px; /* Adjust height as needed */
+  background-color: white;
+  margin: 3rem 20px;
+}
+
+p.white{
   color: white;
 }
 
@@ -109,6 +124,44 @@ input[type=range]::-webkit-slider-thumb:active {
   -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
 }
 
+#right-box p{
+  font-size:12px;
+  text-align: center;
+}
+
+#left-box p{
+  font-size:12px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #right-box p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #right-box p {
+    font-size: 8px;
+  }
+}
+
+input {
+  width: 120px;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  font-size:50px;
+  margin-top: 2.5rem;
+}
+h3 {
+  text-align: center;
+  color: white;
+  margin-top: .5rem;
+}
+
 input[type="number"] {
   color: #ffffff;
   width: 50px;
@@ -133,4 +186,24 @@ input[type="range"] {
 #fromSlider {
   height: 0;
   z-index: 1;
+}
+
+#difficultyContainer button {
+  width: 100px;
+  height: 50px;
+  font-size: 1.2rem;
+  background-color: gray;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+#difficultyContainer button:hover {
+  background-color: yellow;
+  color: black;
+}
+
+#difficultyContainer button.active {
+  background-color: green;
+  color: white;
 }
