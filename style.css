@@ -126,12 +126,40 @@ input[type=range]::-webkit-slider-thumb:active {
 
 #right-box p{
   font-size:12px;
+  text-align: center;
+}
+
+#left-box p{
+  font-size:12px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #right-box p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #right-box p {
+    font-size: 8px;
+  }
+}
+
+input {
+  width: 120px;
 }
 
 h1 {
   text-align: center;
   color: white;
+  font-size:50px;
   margin-top: 2.5rem;
+}
+h3 {
+  text-align: center;
+  color: white;
+  margin-top: .5rem;
 }
 
 input[type="number"] {

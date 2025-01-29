@@ -22,10 +22,26 @@
     
    
       <h1> WordleRacer</h1>
-    
+      <h3> by Zubin Gupta</h3>
     
     <div id="game-container">
-      <div id="left-box" class="text-box"> </div>
+      <div id="left-box" class="text-box">
+        <p>Single-player mode? Go right ahead!</p>
+        <p>Or</p>
+        <p>Multi-player mode? Enter details below:</p>  
+        <input id="username" placeholder="Enter Username"></input> <button id="usernamebutton" onclick="storeUsername()">Enter</button><br>
+        
+        <input id="room" placeholder="Enter Room Code"></input> <button id="roomcodebutton" onclick="storeRoomCode()">Enter</button> 
+        <br><hr><br>
+        <p>What’s New?</p>
+        <ol></ol>
+        <p>Multi-player mode: Race your friends!</p>
+        <p>Select your difficulty level!</p>
+        <p>Use CTRL+Backspace to delete entire word!</p>
+        <p>Faster response time!</p>
+
+
+      </div>
       <div id="game"></div>
       <div id="right-box" class="text-box">
         <p>The rules for playing Wordle are as follows: </p>
@@ -41,11 +57,10 @@
     </div>
   
     
-    <p id="hello" class="white">Welcome to Wordleracer! (WIP)</p>
+    <p id="hello" class="white">Have fun!</p>
     
     <p id="diff" class="white">hello</p>
-    <input id="username" placeholder="Enter Username"></input> <button id="usernamebutton" onclick="storeUsername()">Enter</button><br>
-    <input id="room" placeholder="Enter Room Code (4 chars)"></input> <button id="roomcodebutton" onclick="storeRoomCode()">Enter</button>
+    
     <p id ="pListDisplay"></p>
     <div id="difficultyContainer" style="margin-top: 20px;">
       <button onclick="setDifficultyRange(1, 5)">Easy</button>

@@ -396,7 +396,7 @@ window.setDifficultyRange = function(min, max) {
 }
 
 function startup() {
-  document.getElementById("hello").innerText = "Welcome to WordleRacer (WIP)!";
+  document.getElementById("hello").innerText = "Have fun!";
   const game = document.getElementById('game');
   drawGrid(game);
 
