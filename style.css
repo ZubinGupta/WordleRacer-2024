@@ -63,7 +63,7 @@ body {
 }
 
 .text-box {
-  width: 350px;
+  width: 380px;
   height: 420px; /* Adjust height as needed */
   background-color: white;
   margin: 3rem 20px;
@@ -125,23 +125,50 @@ input[type=range]::-webkit-slider-thumb:active {
 }
 
 #right-box p{
-  font-size:12px;
-  text-align: center;
+  font-size:14px;
+  text-align: left;
+  margin-left: 2.5%;
+  margin-right:2.5%
 }
 
 #left-box p{
-  font-size:12px;
+  font-size:15px;
   text-align: center;
 }
 
+#right-box ul{
+  text-align: left;
+}
+
+#left-box ul{
+  text-align: left;
+}
+
+#left-box input{
+  text-align: center;
+  margin-left: 10%;
+}
+
+@media (max-width: 960px) {
+  #left-box {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 960px) {
+  #right-box {
+    font-size: 12px;
+  }
+}
+
 @media (max-width: 768px) {
-  #right-box p {
+  #right-box  {
     font-size: 10px;
   }
 }
 
 @media (max-width: 480px) {
-  #right-box p {
+  #right-box  {
     font-size: 8px;
   }
 }
@@ -196,11 +223,14 @@ input[type="range"] {
   border: none;
   color: white;
   cursor: pointer;
+  justify-content: center;
+  align-items: start;
 }
 
 #difficultyContainer button:hover {
   background-color: yellow;
   color: black;
+  
 }
 
 #difficultyContainer button.active {

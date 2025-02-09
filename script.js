@@ -76,7 +76,7 @@ window.storeRoomCode = function () {
           
         }
         if (roomCode != 'default') {
-          document.getElementById('pListDisplay').innerText = pList.join('\n');
+          document.getElementById('pListDisplay').innerText = "Players:\n" + pList.join('\n');
         }
       }
       const newUserRef = push(reference, newUsername);
@@ -104,7 +104,7 @@ window.storeRoomCode = function () {
         const pList = Object.values(snapshot.val());
         console.log('pList updated:', pList);
         if (roomCode != 'default') {
-          document.getElementById('pListDisplay').innerText = pList.join('\n');
+          document.getElementById('pListDisplay').innerText = "Players:\n" + pList.join('\n');
         }
       } else {
         console.log('No data available');

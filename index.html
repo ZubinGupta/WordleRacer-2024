@@ -21,7 +21,8 @@
       
     
    
-      <h1> WordleRacer</h1>
+      <h1>
+        <font color="red">W</font><font color="orange">o</font><font color="yellow">r</font><font color="green">d</font><font color="blue">l</font><font color="purple">e</font>Racer</h1>
       <h3> by Zubin Gupta</h3>
     
     <div id="game-container">
@@ -33,12 +34,14 @@
         
         <input id="room" placeholder="Enter Room Code"></input> <button id="roomcodebutton" onclick="storeRoomCode()">Enter</button> 
         <br><hr><br>
-        <p>What’s New?</p>
-        <ol></ol>
-        <p>Multi-player mode: Race your friends!</p>
-        <p>Select your difficulty level!</p>
-        <p>Use CTRL+Backspace to delete entire word!</p>
-        <p>Faster response time!</p>
+        <p><b>What’s New?</b></p>
+        <ul>
+          <li>Multi-player mode: Race your friends!</li>
+          <li>Select your difficulty level!</li>
+          <li>Use CTRL+Backspace to delete entire word!</li>
+          <li>Faster response time!</li>
+        </ol>
+        
 
 
       </div>
@@ -61,7 +64,7 @@
     
     <p id="diff" class="white">hello</p>
     
-    <p id ="pListDisplay"></p>
+    <p id ="pListDisplay" class="white"></p>
     <div id="difficultyContainer" style="margin-top: 20px;">
       <button onclick="setDifficultyRange(1, 5)">Easy</button>
       <button onclick="setDifficultyRange(6, 10)">Medium</button>
