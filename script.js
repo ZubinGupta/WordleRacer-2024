@@ -403,7 +403,7 @@ function startup() {
   registerKeyboardEvents();
   // state.secret = "hello";
 
-  updateGrid();
+  
 
   reset();
 }
@@ -450,13 +450,21 @@ function reset() {
       box.classList.remove("empty");
     }
   }
-
+  updateGrid();
 }
 
 document.querySelectorAll('#difficultyContainer button').forEach(button => {
   button.addEventListener('click', function() {
     document.querySelectorAll('#difficultyContainer button').forEach(btn => btn.classList.remove('active'));
     this.classList.add('active');
+  });
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && e.target.tagName === 'BUTTON') {
+      e.preventDefault();
+    }
   });
 });
 

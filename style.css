@@ -65,7 +65,7 @@ body {
 .text-box {
   width: 380px;
   height: 420px; /* Adjust height as needed */
-  background-color: white;
+  background-color: var(--wrong);
   margin: 3rem 20px;
 }
 
@@ -219,7 +219,7 @@ input[type="range"] {
   width: 100px;
   height: 50px;
   font-size: 1.2rem;
-  background-color: gray;
+  background-color: var(--empty);
   border: none;
   color: white;
   cursor: pointer;
@@ -228,12 +228,12 @@ input[type="range"] {
 }
 
 #difficultyContainer button:hover {
-  background-color: yellow;
+  background-color: var(--wrong);
   color: black;
   
 }
 
 #difficultyContainer button.active {
-  background-color: green;
+  background-color: var(--right);
   color: white;
 }
