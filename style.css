@@ -64,65 +64,58 @@ body {
 
 .text-box {
   width: 380px;
-  height: 420px; /* Adjust height as needed */
-  background-color: var(--wrong);
+  height: 420px; 
+  background-color: #f2d8c4;
   margin: 3rem 20px;
+  border-radius: 5%;
+  padding: 2px;
+  overflow: hidden; 
+  position: relative;
 }
 
-p.white{
+.text-box-content {
+  height: 100%;
+  overflow-y: auto; 
+  padding-right: 10px; 
+  box-sizing: border-box;
+}
+
+
+.text-box-content::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.text-box-content::-webkit-scrollbar-track {
+  background: #f2d8c4;
+}
+
+.text-box-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.text-box-content::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+.text-box-content {
+  scrollbar-width: thin; 
+  scrollbar-color: #888 #f2d8c4; 
+}
+
+p.white {
   color: white;
 }
 
 .range_container {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin: 10% auto;
-}
-
-.sliders_control {
-  position: relative;
-  min-height: 50px;
-}
-
-.form_control {
-  position: relative;
-  display: flex;
   justify-content: space-between;
-  font-size: 16 px;
+  font-size: 16 px ;
   color: #ffffff;
 }
 
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  pointer-events: all;
-  width: 24px;
-  height: 24px;
-  background-color: #fff;
-  border-radius: 25%;
-  box-shadow: 0 0 0 1px #C6C6C6;
-  cursor: pointer;
-}
-
-input[type=range]::-moz-range-thumb {
-
-  pointer-events: all;
-  width: 24px;
-  height: 24px;
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px #C6C6C6;
-  cursor: pointer;  
-}
-
-input[type=range]::-webkit-slider-thumb:hover {
-  background: #f7f7f7;
-}
-
-input[type=range]::-webkit-slider-thumb:active {
-  box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-  -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
-}
 
 #right-box p{
   font-size:14px;
@@ -225,6 +218,7 @@ input[type="range"] {
   cursor: pointer;
   justify-content: center;
   align-items: start;
+  border-radius:15px;
 }
 
 #difficultyContainer button:hover {
@@ -236,4 +230,40 @@ input[type="range"] {
 #difficultyContainer button.active {
   background-color: var(--right);
   color: white;
+}
+
+#pListDisplay {
+  background-color: #333; 
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px; 
+  font-family: Arial, Helvetica, sans-serif; 
+  font-size: 1rem; 
+  margin-top: 20px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  max-width: 300px; 
+  overflow-y: auto; 
+  max-height: 200px; 
+}
+
+#displayContainer {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
+  margin-top: 20px; 
+}
+
+#startButton {
+  background-color: var(--right); 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer; 
+}
+
+#startButton:hover {
+  background-color: var(--wrong); 
+  color: black; 
 }

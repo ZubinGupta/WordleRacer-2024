@@ -73,7 +73,6 @@ window.storeRoomCode = function () {
         while (pList.includes(newUsername)) {
           count++;
           newUsername = `${username} ${count}`;
-          
         }
         if (roomCode != 'default') {
           document.getElementById('pListDisplay').innerText = "Players:\n" + pList.join('\n');
@@ -94,7 +93,7 @@ window.storeRoomCode = function () {
         startButton.addEventListener('click', function () {
           startGame();
         });
-        document.body.appendChild(startButton);
+        document.getElementById('displayContainer').appendChild(startButton);
       }
     }, { onlyOnce: true });
 
@@ -455,8 +454,10 @@ function reset() {
 
 document.querySelectorAll('#difficultyContainer button').forEach(button => {
   button.addEventListener('click', function() {
-    document.querySelectorAll('#difficultyContainer button').forEach(btn => btn.classList.remove('active'));
-    this.classList.add('active');
+    if(mult === -1){
+      document.querySelectorAll('#difficultyContainer button').forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+    }
   });
 });
 
@@ -467,5 +468,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   });
 });
+
+
 
 startup();
