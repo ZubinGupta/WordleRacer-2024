@@ -237,7 +237,12 @@ function registerKeyboardEvents() {
     }
     const key = e.key;
     if (key === 'Enter') {
-      if (done) reset();
+      if (done) {
+        const playAgainButton = document.getElementById('playAgainButton');
+        if (playAgainButton) {
+          playAgainButton.click();
+        }
+      }
       else {
         if (state.currentCol === 5) {
           const word = getCurrentWord();
@@ -264,6 +269,12 @@ function registerKeyboardEvents() {
     }
     if (key === 'Shift') { 
       if (mult == -1){
+        if (done) {
+          const playAgainButton = document.getElementById('playAgainButton');
+          if (playAgainButton) {
+            playAgainButton.click();
+          }
+        }
         reset();
       }
       
@@ -323,17 +334,11 @@ function revealWord(guess) {
   for (let i = 0; i < 5; i++) {
     const box = document.getElementById(`box${row}${i}`);
     const letter = box.textContent;
-    const numOfOccurrencesSecret = getNumOfOccurrencesInWord(
-      state.secret,
-      letter
-    );
+    const numOfOccurrencesSecret = getNumOfOccurrencesInWord(      state.secret,       letter    );
     const numOfOccurrencesGuess = getNumOfOccurrencesInWord(guess, letter);
     const letterPosition = getPositionOfOccurrence(guess, letter, i);
 
-    if (
-      numOfOccurrencesGuess > numOfOccurrencesSecret &&
-      letterPosition > numOfOccurrencesSecret
-    ) {
+    if (      numOfOccurrencesGuess > numOfOccurrencesSecret &&       letterPosition > numOfOccurrencesSecret    ) {
       box.classList.add('empty');
     } else {
       if (letter === state.secret[i]) {
@@ -357,16 +362,25 @@ function revealWord(guess) {
     }
     done = true;
   } else if (isGameOver) {
-    if (mult < 0){
-      document.getElementById("hello").innerText = "the word was " + state.secret;
-    }else{
+    if (mult > -1){
       isDQ = true;
       set(ref(database, `${roomCode}/players/${pKey}`), `${username} lost`);
       mult = -1;
+      setTimeout(() => {(remove(ref(database, roomCode)))}, 1000);
     }
-      done = true;
+    document.getElementById("hello").innerText = "the word was " + state.secret;
+    done = true;
   }
-
+  if (done) {
+    const playAgainButton = document.createElement('button');
+    playAgainButton.id = 'playAgainButton';
+    playAgainButton.textContent = 'Again?';
+    playAgainButton.addEventListener('click', function () {
+      playAgainButton.remove();
+      reset();
+    });
+    document.getElementById('difficultyContainer').appendChild(playAgainButton);
+  }
 }
 
 function isLetter(key) {
@@ -409,19 +423,19 @@ function startup() {
 
 function reset() {
   if (mult >= 0) {
-    if(!isDQ) mult++;
+    if (!isDQ) mult++;
     if (mult < gamesList.length + 1) {
       set(ref(database, `${roomCode}/players/${pKey}`), `${username} ${mult}/3`);
       state.secret = gamesList[mult - 1].substring(0, 5);
     } else {
-      const winref = ref(database,`${roomCode}/winner`);
+      const winref = ref(database, `${roomCode}/winner`);
       push(winref, username);
       mult = -1;
       var max = toInput.value;
       var min = fromInput.value;
       var num = Math.floor(Math.random() * 303 * (max - min + 1)) + min * 303 - 303;
       state.secret = diff[num];
-      setTimeout(() => {(remove(ref(database, roomCode)))}, 1000);
+      setTimeout(() => { remove(ref(database, roomCode)) }, 1000);
     }
   } else {
     var max = toInput.value;
