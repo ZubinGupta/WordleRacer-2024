@@ -65,7 +65,7 @@ body {
 .text-box {
   width: 380px;
   height: 420px; 
-  background-color: #f2d8c4;
+  background-color: #696969;
   margin: 3rem 20px;
   border-radius: 5%;
   padding: 2px;
@@ -173,8 +173,8 @@ input {
 h1 {
   text-align: center;
   color: white;
-  font-size:50px;
-  margin-top: 2.5rem;
+  font-size:75px;
+  margin-top: 1rem;
   font-family: 'Yellowtail', cursive;
 }
 h3 {
@@ -253,9 +253,30 @@ input[type="range"] {
 
 #displayContainer {
   display: flex;
+  flex-direction: column;
   align-items: center; 
   gap: 10px; 
   margin-top: 20px; 
+}
+
+#playAgainButton {
+  background-color: var(--right); 
+  color: white; 
+  border: 2px solid var(--empty); 
+  padding: 10px 20px; 
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer; 
+  position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  z-index: 1000; 
+}
+
+#playAgainButton:hover {
+  background-color: var(--wrong); 
+  color: black; 
 }
 
 #startButton {
@@ -266,6 +287,7 @@ input[type="range"] {
   border-radius: 10px;
   font-size: 1rem;
   cursor: pointer; 
+  
 }
 
 #startButton:hover {

@@ -334,11 +334,11 @@ function revealWord(guess) {
   for (let i = 0; i < 5; i++) {
     const box = document.getElementById(`box${row}${i}`);
     const letter = box.textContent;
-    const numOfOccurrencesSecret = getNumOfOccurrencesInWord(      state.secret,       letter    );
+    const numOfOccurrencesSecret = getNumOfOccurrencesInWord(state.secret, letter);
     const numOfOccurrencesGuess = getNumOfOccurrencesInWord(guess, letter);
     const letterPosition = getPositionOfOccurrence(guess, letter, i);
 
-    if (      numOfOccurrencesGuess > numOfOccurrencesSecret &&       letterPosition > numOfOccurrencesSecret    ) {
+    if (numOfOccurrencesGuess > numOfOccurrencesSecret && letterPosition > numOfOccurrencesSecret) {
       box.classList.add('empty');
     } else {
       if (letter === state.secret[i]) {
@@ -349,26 +349,24 @@ function revealWord(guess) {
         box.classList.add('empty');
       }
     }
-
-
   }
 
   const isWinner = state.secret === guess;
   const isGameOver = state.currentRow === 5;
 
   if (isWinner) {
-    if (mult < 0){
-      document.getElementById("hello").innerText = "you won!";
+    if (mult < 0) {
+      document.getElementById("hello").innerText = "Congratulations! You got it!";
     }
     done = true;
   } else if (isGameOver) {
-    if (mult > -1){
+    if (mult > -1) {
       isDQ = true;
       set(ref(database, `${roomCode}/players/${pKey}`), `${username} lost`);
       mult = -1;
-      setTimeout(() => {(remove(ref(database, roomCode)))}, 1000);
+      setTimeout(() => { remove(ref(database, roomCode)) }, 1000);
     }
-    document.getElementById("hello").innerText = "the word was " + state.secret;
+    document.getElementById("hello").innerText = "Better luck next time! The word was " + state.secret;
     done = true;
   }
   if (done) {
@@ -379,7 +377,7 @@ function revealWord(guess) {
       playAgainButton.remove();
       reset();
     });
-    document.getElementById('difficultyContainer').appendChild(playAgainButton);
+    document.body.appendChild(playAgainButton); // Append to body to center on screen
   }
 }
 
