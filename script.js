@@ -402,7 +402,12 @@ window.setDifficultyRange = function(min, max) {
     fromInput.value = min;
     toInput.value = max;
     document.getElementById("diff").innerText = `Difficulty: ${min}-${max}`;
-    reset();
+    const playAgainButton = document.getElementById('playAgainButton');
+    if (playAgainButton) {
+      playAgainButton.click();
+    }else{
+      reset();
+    }
   }
 }
 

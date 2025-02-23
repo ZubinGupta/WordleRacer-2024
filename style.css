@@ -2,11 +2,12 @@ body {
   background: var(--default);
 }
 :root {
-  --default: #121213;
-  --empty: #3a3a3c;
-  --wrong: #b59f3b;
-  --right: #538d4e;
+  --default: #c8ff00;
+  --empty: #5b5b72;
+  --wrong: #e4d500;
+  --right: #15ff00;
   --select: #08b0d1;
+  --textbg: #9dff00;
 }
 .grid {
   display: grid;
@@ -19,12 +20,13 @@ body {
   height: 60px;
   border: 2px solid var(--empty);
   margin: 4px;
-  color: white;
+  color: black;
   text-transform: uppercase;
   display: grid;
   place-items: center;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 2.4rem;
+  
 }
 
 .box.empty {
@@ -65,12 +67,13 @@ body {
 .text-box {
   width: 380px;
   height: 420px; 
-  background-color: #696969;
+  background-color: var(--textbg);
   margin: 3rem 20px;
   border-radius: 5%;
   padding: 2px;
   overflow: hidden; 
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .text-box-content {
@@ -105,7 +108,7 @@ body {
 }
 
 p.white {
-  color: white;
+  color: black;
 }
 
 .range_container {
@@ -172,19 +175,19 @@ input {
 
 h1 {
   text-align: center;
-  color: white;
+  color: black;
   font-size:75px;
   margin-top: 1rem;
   font-family: 'Yellowtail', cursive;
 }
 h3 {
   text-align: center;
-  color: white;
+  color: black;
   margin-top: .5rem;
 }
 
 input[type="number"] {
-  color: #ffffff;
+  color: #C6C6C6;
   width: 50px;
   height: 30px;
   font-size: 20px;
@@ -213,13 +216,14 @@ input[type="range"] {
   width: 100px;
   height: 50px;
   font-size: 1.2rem;
-  background-color: var(--empty);
+  background-color: var(--textbg);
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   justify-content: center;
   align-items: start;
   border-radius:15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
 }
 
 #difficultyContainer button:hover {
@@ -229,13 +233,13 @@ input[type="range"] {
 }
 
 #difficultyContainer button.active {
-  background-color: var(--right);
-  color: white;
+  background-color: var(--select);
+  color: black;
 }
 
 #pListDisplay {
-  background-color: #333; 
-  color: #fff;
+  background-color: var(--textbg); 
+  color: black;
   padding: 10px;
   border-radius: 10px; 
   font-family: Arial, Helvetica, sans-serif; 
@@ -260,8 +264,8 @@ input[type="range"] {
 }
 
 #playAgainButton {
-  background-color: var(--right); 
-  color: white; 
+  background-color: var(--wrong); 
+  color: black; 
   border: 2px solid var(--empty); 
   padding: 10px 20px; 
   border-radius: 10px;
@@ -275,13 +279,13 @@ input[type="range"] {
 }
 
 #playAgainButton:hover {
-  background-color: var(--wrong); 
+  background-color: var(--right); 
   color: black; 
 }
 
 #startButton {
-  background-color: var(--right); 
-  color: white; 
+  background-color: var(--wrong); 
+  color: black; 
   border: none; 
   padding: 10px 20px; 
   border-radius: 10px;
@@ -291,6 +295,31 @@ input[type="range"] {
 }
 
 #startButton:hover {
-  background-color: var(--wrong); 
+  background-color: var(--right); 
   color: black; 
 }
+
+#header-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; 
+}
+
+#logo {
+  position: absolute;
+  left: 30%; 
+  width: 200px; 
+  height: auto; 
+}
+
+#text-container {
+  text-align: center;
+}
+
+#logo-text-container {
+  display: flex;
+  align-items: center;
+}
+
