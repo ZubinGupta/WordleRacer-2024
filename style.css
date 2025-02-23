@@ -2,12 +2,12 @@ body {
   background: var(--default);
 }
 :root {
-  --default: #c8ff00;
-  --empty: #5b5b72;
-  --wrong: #e4d500;
-  --right: #15ff00;
+  --default: #def390;
+  --empty: #b5abc0;
+  --wrong: #f5f123;
+  --right: #7fe051;
   --select: #08b0d1;
-  --textbg: #9dff00;
+  --textbg: #dfebad;
 }
 .grid {
   display: grid;
@@ -73,7 +73,7 @@ body {
   padding: 2px;
   overflow: hidden; 
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 4px 8px var(--empty); 
 }
 
 .text-box-content {
@@ -309,7 +309,8 @@ input[type="range"] {
 
 #logo {
   position: absolute;
-  left: 30%; 
+  right: 5%; 
+  top: 50%;
   width: 200px; 
   height: auto; 
 }
