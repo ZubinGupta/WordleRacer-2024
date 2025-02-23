@@ -366,7 +366,7 @@ function revealWord(guess) {
       mult = -1;
       setTimeout(() => { remove(ref(database, roomCode)) }, 1000);
     }
-    document.getElementById("hello").innerText = "Better luck next time! The word was " + state.secret;
+    document.getElementById("hello").innerText = "Better luck next time! The word was " + state.secret + ".";
     done = true;
   }
   if (done) {
